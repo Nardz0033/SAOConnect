@@ -1,0 +1,25 @@
+@model NardzSAO.Models.Announcement
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container-lg py-4">
+    <div class="panel-card p-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+            <span class="badge bg-warning text-dark">@Model.Priority</span>
+            <small class="text-muted">Published @Model.PublishDate.ToString("MMM dd, yyyy")</small>
+        </div>
+        <h1>@Model.Title</h1>
+        <p class="text-muted">Category: @Model.Category • Target Audience: @Model.TargetAudience • Views: @Model.ViewCount</p>
+        <div class="mb-4">
+            @Html.Raw(Model.Content)
+        </div>
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" class="img-fluid rounded mb-4" alt="Announcement image" />
+        }
+        <div>
+            <a asp-action="Index" class="btn btn-outline-secondary">Back to Announcements</a>
+        </div>
+    </div>
+</div>

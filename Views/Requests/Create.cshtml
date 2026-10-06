@@ -1,0 +1,35 @@
+@model NardzSAO.Models.RequestItem
+@{
+    ViewData["Title"] = "Submit Request";
+}
+
+<div class="container-lg py-4">
+    <div class="panel-card p-4 form-card">
+        <h1>Submit a Request</h1>
+        <form asp-action="Create" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="Category" class="form-label"></label>
+                    <select asp-for="Category" class="form-select" asp-items="Html.GetEnumSelectList<NardzSAO.Models.RequestCategory>()"></select>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Subject" class="form-label"></label>
+                    <input asp-for="Subject" class="form-control" />
+                </div>
+                <div class="col-12">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Attachment</label>
+                    <input type="file" name="attachment" class="form-control" />
+                </div>
+                <div class="col-12 d-flex justify-content-end gap-2">
+                    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+@model NardzSAO.Models.Event
+@{
+    ViewData["Title"] = "Create Event";
+}
+
+<div class="container-lg py-4">
+    <div class="panel-card p-4 form-card">
+        <h1>Create Event</h1>
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Category" class="form-label"></label>
+                    <input asp-for="Category" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Location" class="form-label"></label>
+                    <input asp-for="Location" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Organizer" class="form-label"></label>
+                    <input asp-for="Organizer" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="StartDateTime" class="form-label"></label>
+                    <input asp-for="StartDateTime" type="datetime-local" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="EndDateTime" class="form-label"></label>
+                    <input asp-for="EndDateTime" type="datetime-local" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="MaximumParticipants" class="form-label"></label>
+                    <input asp-for="MaximumParticipants" type="number" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="RegistrationDeadline" class="form-label"></label>
+                    <input asp-for="RegistrationDeadline" type="datetime-local" class="form-control" />
+                </div>
+                <div class="col-12">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Poster</label>
+                    <input type="file" name="posterFile" class="form-control" />
+                </div>
+                <div class="col-12 d-flex justify-content-end gap-2">
+                    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Create Event</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

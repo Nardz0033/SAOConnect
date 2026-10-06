@@ -1,0 +1,54 @@
+@model NardzSAO.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Staff Dashboard";
+}
+
+<div class="container-lg py-4">
+    <div class="page-header">
+        <h1>SAO Dashboard</h1>
+        <p class="text-muted mb-0">Operational overview and engagement insights.</p>
+    </div>
+
+    <div class="dashboard-grid mb-4">
+        <div class="metric-card"><span class="value" data-count="@Model.TotalStudents">0</span><div class="label">Total Students</div></div>
+        <div class="metric-card"><span class="value" data-count="@Model.ActiveOrganizations">0</span><div class="label">Active Organizations</div></div>
+        <div class="metric-card"><span class="value" data-count="@Model.UpcomingEvents">0</span><div class="label">Upcoming Events</div></div>
+        <div class="metric-card"><span class="value" data-count="@Model.PendingRequests">0</span><div class="label">Pending Requests</div></div>
+        <div class="metric-card"><span class="value" data-count="@Model.PendingAppointments">0</span><div class="label">Pending Appointments</div></div>
+        <div class="metric-card"><span class="value" data-count="@Model.UnresolvedConcerns">0</span><div class="label">Unresolved Concerns</div></div>
+        <div class="metric-card"><span class="value" data-count="@Model.PublishedAnnouncements">0</span><div class="label">Announcements</div></div>
+        <div class="metric-card"><span class="value" data-count="@Model.EventAttendance">0</span><div class="label">Attendance Count</div></div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="panel-card p-4">
+                <div class="section-heading"><h3>Recent Activity</h3><a asp-controller="AuditLogs" asp-action="Index">Audit Logs</a></div>
+                <div class="list-group mt-3">
+                    @foreach (var item in Model.StudentActivity)
+                    {
+                        <div class="card-soft mb-2">
+                            @if (item is NardzSAO.Models.AuditLog log)
+                            {
+                                <strong>@log.Action</strong><br />
+                                <span class="text-muted small">@log.Description</span>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel-card p-4">
+                <h3>Pending Requests</h3>
+                @foreach (var request in Model.PendingRequestsList)
+                {
+                    <div class="card-soft mb-2">
+                        <strong>@request.Subject</strong>
+                        <div class="text-muted small">@request.Status</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,110 @@
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Identity
+@using NardzSAO.Models
+@inject NardzSAO.Data.ApplicationDbContext DbContext
+@inject UserManager<ApplicationUser> UserManager
+@{
+    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    var notificationCount = currentUserId != null ? DbContext.Notifications.Count(n => n.UserId == currentUserId && !n.IsRead) : 0;
+}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SAOConnect</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="topbar">
+        <nav class="navbar navbar-expand-lg container-lg">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                <span class="brand-mark">S</span>
+                SAOConnect
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Announcements" asp-action="Index">Announcements</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Events" asp-action="Index">Events</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Organizations" asp-action="Index">Organizations</a></li>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <li class="nav-item"><a class="nav-link" asp-controller="Requests" asp-action="Index">Requests</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Appointments" asp-action="Index">Appointments</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Concerns" asp-action="Index">Concerns</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Documents" asp-action="Index">Documents</a></li>
+                    }
+                </ul>
+
+                <ul class="navbar-nav align-items-center gap-2">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link notification-pill position-relative" asp-controller="Notifications" asp-action="Index">
+                                <i class="bi bi-bell"></i>
+                                @if (notificationCount > 0)
+                                {
+                                    <span class="badge-count">@notificationCount</span>
+                                }
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle user-pill" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="user-avatar">@User.Identity.Name?.Substring(0, 1).ToUpper()</span>
+                                @User.Identity.Name
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Dashboard">Dashboard</a></li>
+                                <li><a class="dropdown-item" asp-controller="Notifications" asp-action="Index">Notifications</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Profile</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                                <li>
+                                    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post">
+                                        <button type="submit" class="dropdown-item text-danger">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <button id="themeToggle" class="btn btn-sm btn-outline-secondary" type="button" aria-label="Toggle dark mode">
+                                <i class="bi bi-moon-stars"></i>
+                            </button>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item"><a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Login</a></li>
+                        <li class="nav-item"><button id="themeToggle" class="btn btn-sm btn-outline-secondary" type="button" aria-label="Toggle dark mode"><i class="bi bi-moon-stars"></i></button></li>
+                    }
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <div class="container-lg d-flex justify-content-between align-items-center flex-wrap gap-2 py-3">
+            <div>
+                <strong>SAOConnect</strong> — Student Affairs Office Management & Student Engagement System
+            </div>
+            <div>Developed by Nardz</div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

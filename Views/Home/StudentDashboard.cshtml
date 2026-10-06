@@ -1,0 +1,84 @@
+@model NardzSAO.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Student Dashboard";
+}
+
+<div class="container-lg py-4">
+    <div class="page-header">
+        <h1>Welcome back, @Model.UserName!</h1>
+        <p class="text-muted mb-0">Your campus activity at a glance.</p>
+    </div>
+
+    <div class="dashboard-grid mb-4">
+        <div class="metric-card"><span class="value" data-count="@Model.UpcomingEvents">0</span><div class="label">Upcoming Events</div></div>
+        <div class="metric-card"><span class="value" data-count="@Model.PendingRequests">0</span><div class="label">Pending Requests</div></div>
+        <div class="metric-card"><span class="value" data-count="@Model.PendingAppointments">0</span><div class="label">Appointments</div></div>
+        <div class="metric-card"><span class="value" data-count="@Model.Notifications.Count">0</span><div class="label">Notifications</div></div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="panel-card p-4">
+                <div class="section-heading"><h3>Your Activity</h3></div>
+                <table class="table table-borderless mt-3">
+                    <thead><tr><th>Item</th><th>Status</th><th>Action</th></tr></thead>
+                    <tbody>
+                        @foreach (var item in Model.StudentActivity)
+                        {
+                            if (item is NardzSAO.Models.RequestItem request)
+                            {
+                                <tr><td>@request.Subject</td><td>@request.Status</td><td><a asp-controller="Requests" asp-action="Index">View</a></td></tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel-card p-4">
+                <h3>Joined Organizations</h3>
+                @if (Model.JoinedOrganizations.Any())
+                {
+                    foreach (var membership in Model.JoinedOrganizations)
+                    {
+                        <div class="card-soft mb-2">
+                            <strong>@membership.Organization?.Name</strong>
+                            <div class="text-muted small">@membership.Status</div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="empty-state">No organizations joined yet.</div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mt-1">
+        <div class="col-lg-6">
+            <div class="panel-card p-4">
+                <h3>Recent Announcements</h3>
+                @foreach (var announcement in Model.RecentAnnouncements)
+                {
+                    <div class="card-soft mb-2">
+                        <strong>@announcement.Title</strong>
+                        <div class="text-muted small">@announcement.PublishDate.ToString("MMM dd, yyyy")</div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel-card p-4">
+                <h3>Upcoming Events</h3>
+                @foreach (var item in Model.UpcomingEventList)
+                {
+                    <div class="card-soft mb-2">
+                        <strong>@item.Name</strong>
+                        <div class="text-muted small">@item.StartDateTime.ToString("MMM dd, yyyy")</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

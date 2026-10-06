@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1">
+      <stop offset="0%" stop-color="#2d6cdf"/>
+      <stop offset="100%" stop-color="#5bc0ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="700" fill="url(#bg)"/>
+  <circle cx="960" cy="140" r="150" fill="rgba(255,255,255,0.15)"/>
+  <rect x="120" y="120" width="520" height="420" rx="30" fill="rgba(255,255,255,0.11)" stroke="rgba(255,255,255,0.4)"/>
+  <text x="160" y="240" fill="white" font-family="Segoe UI, Arial" font-size="40" font-weight="700">SAOConnect</text>
+  <text x="160" y="320" fill="white" font-family="Segoe UI, Arial" font-size="64" font-weight="700">Campus Event</text>
+  <text x="160" y="390" fill="rgba(255,255,255,0.8)" font-family="Segoe UI, Arial" font-size="26">Student Affairs Office</text>
+  <text x="160" y="470" fill="rgba(255,255,255,0.9)" font-family="Segoe UI, Arial" font-size="22">Connecting Students • Empowering Campus Life</text>
+</svg>

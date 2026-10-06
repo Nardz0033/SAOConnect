@@ -1,0 +1,53 @@
+@model IEnumerable<NardzSAO.Models.Event>
+@{
+    ViewData["Title"] = "Events";
+}
+
+<div class="container-lg py-4">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+        <div>
+            <h1>Campus Events</h1>
+            <p class="text-muted mb-0">Explore upcoming activities, opportunities, and campus engagement events.</p>
+        </div>
+        @if (User.IsInRole("Staff") || User.IsInRole("Admin"))
+        {
+            <a class="btn btn-primary" asp-controller="Events" asp-action="Create">Create Event</a>
+        }
+    </div>
+
+    <form method="get" class="panel-card p-3 mb-4">
+        <div class="row g-3">
+            <div class="col-md-10"><input name="search" class="form-control" placeholder="Search by name, category, or location" /></div>
+            <div class="col-md-2"><button type="submit" class="btn btn-primary w-100">Search</button></div>
+        </div>
+    </form>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state panel-card">No events available.</div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-6">
+                    <div class="card-soft h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-primary-subtle text-primary">@item.Category</span>
+                            <small class="text-muted">@item.StartDateTime.ToString("MMM dd")</small>
+                        </div>
+                        <h3>@item.Name</h3>
+                        <p class="text-muted">@item.Description</p>
+                        <p class="mb-2"><i class="bi bi-geo-alt"></i> @item.Location</p>
+                        <p class="mb-2"><i class="bi bi-clock"></i> @item.StartDateTime.ToString("MMM dd, yyyy")</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <strong>@item.Registrations.Count registered</strong>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">View</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

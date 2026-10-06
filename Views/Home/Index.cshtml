@@ -1,0 +1,120 @@
+﻿@model NardzSAO.ViewModels.HomeIndexViewModel
+@{
+    ViewData["Title"] = "Student Affairs Office";
+}
+
+<section class="hero-section py-5">
+    <div class="container-lg">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+                <span class="eyebrow">SAOConnect</span>
+                <h1 class="display-4 fw-bold mb-3">Connecting Students.<br />Empowering Campus Life.</h1>
+                <p class="lead text-muted mb-4">Your centralized Student Affairs Office platform for announcements, events, organizations, support requests, and student engagement.</p>
+                <div class="d-flex gap-3 flex-wrap mb-4">
+                    <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                    <a class="btn btn-outline-secondary btn-lg" asp-controller="Announcements" asp-action="Index">View Announcements</a>
+                </div>
+                <div class="stat-row d-flex gap-4 flex-wrap">
+                    <div><strong>@Model.StudentCount</strong><span>Students</span></div>
+                    <div><strong>@Model.OrgCount</strong><span>Organizations</span></div>
+                    <div><strong>@Model.EventCount</strong><span>Events</span></div>
+                    <div><strong>@Model.RequestCount</strong><span>Requests</span></div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="hero-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge text-bg-primary rounded-pill">Today</span>
+                        <span class="text-muted small">University Portal</span>
+                    </div>
+                    <div class="mini-panel">
+                        <div class="mini-panel-header">
+                            <span>Upcoming Highlights</span>
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <ul class="list-unstyled mt-3 mb-0">
+                            @foreach (var item in Model.Events)
+                            {
+                                <li class="d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <strong>@item.Name</strong><br />
+                                        <small class="text-muted">@item.Location</small>
+                                    </div>
+                                    <span class="badge rounded-pill text-bg-light">@item.StartDateTime.ToString("MMM dd")</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container-lg section-spacing">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="panel-card p-4">
+                <div class="section-heading mb-3">
+                    <h3>Announcements</h3>
+                    <a asp-controller="Announcements" asp-action="Index">See all</a>
+                </div>
+                @foreach (var announcement in Model.Announcements)
+                {
+                    <div class="announcement-preview card-soft mb-3">
+                        <div class="d-flex justify-content-between align-items-center"><span class="badge bg-warning text-dark">@announcement.Priority</span><small class="text-muted">@announcement.PublishDate.ToString("MMM dd, yyyy")</small></div>
+                        <h5 class="mt-2">@announcement.Title</h5>
+                        <p class="mb-0">@announcement.Content</p>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel-card p-4">
+                <div class="section-heading mb-3">
+                    <h3>Student Organizations</h3>
+                    <a asp-controller="Organizations" asp-action="Index">View</a>
+                </div>
+                @foreach (var organization in Model.Organizations)
+                {
+                    <div class="org-card mb-3">
+                        <div class="d-flex justify-content-between">
+                            <strong>@organization.Name</strong>
+                            <span class="badge text-bg-light">@organization.Category</span>
+                        </div>
+                        <p class="text-muted small mb-0 mt-2">@organization.Description</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container-lg section-spacing pb-5">
+    <div class="row g-4 text-center">
+        <div class="col-md-3">
+            <div class="panel-card p-4">
+                <h3 class="display-6">24/7</h3>
+                <p class="mb-0 text-muted">Student Assistance</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel-card p-4">
+                <h3 class="display-6">150+</h3>
+                <p class="mb-0 text-muted">Campus Events</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel-card p-4">
+                <h3 class="display-6">35</h3>
+                <p class="mb-0 text-muted">Active Clubs</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel-card p-4">
+                <h3 class="display-6">98%</h3>
+                <p class="mb-0 text-muted">Support Satisfaction</p>
+            </div>
+        </div>
+    </div>
+</section>

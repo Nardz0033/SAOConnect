@@ -1,0 +1,31 @@
+@model IEnumerable<NardzSAO.Models.AuditLog>
+@{
+    ViewData["Title"] = "Audit Logs";
+}
+
+<div class="container-lg py-4">
+    <h1>Audit Logs</h1>
+    <div class="table-card mt-3">
+        <table class="table mb-0">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Module</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var log in Model)
+                {
+                    <tr>
+                        <td>@log.Action</td>
+                        <td>@log.Module</td>
+                        <td>@log.Description</td>
+                        <td>@log.CreatedAt.ToString("MMM dd, yyyy")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+@model NardzSAO.Models.Announcement
+@{
+    ViewData["Title"] = "Create Announcement";
+}
+
+<div class="container-lg py-4">
+    <div class="panel-card p-4 form-card">
+        <h1>Create Announcement</h1>
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="Title" class="form-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Category" class="form-label"></label>
+                    <select asp-for="Category" class="form-select" asp-items="Html.GetEnumSelectList<NardzSAO.Models.AnnouncementCategoryType>()"></select>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Priority" class="form-label"></label>
+                    <select asp-for="Priority" class="form-select" asp-items="Html.GetEnumSelectList<NardzSAO.Models.AnnouncementPriority>()"></select>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="TargetAudience" class="form-label"></label>
+                    <input asp-for="TargetAudience" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="PublishDate" class="form-label"></label>
+                    <input asp-for="PublishDate" type="datetime-local" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="ExpirationDate" class="form-label"></label>
+                    <input asp-for="ExpirationDate" type="datetime-local" class="form-control" />
+                </div>
+                <div class="col-12">
+                    <label asp-for="Content" class="form-label"></label>
+                    <textarea asp-for="Content" class="form-control"></textarea>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Image</label>
+                    <input name="imageFile" type="file" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Document</label>
+                    <input name="documentFile" type="file" class="form-control" />
+                </div>
+                <div class="col-12 d-flex justify-content-end gap-2 mt-3">
+                    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Publish</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

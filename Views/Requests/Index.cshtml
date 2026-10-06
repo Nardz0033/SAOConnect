@@ -1,0 +1,41 @@
+@model IEnumerable<NardzSAO.Models.RequestItem>
+@{
+    ViewData["Title"] = "Requests";
+}
+
+<div class="container-lg py-4">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+        <div>
+            <h1>Requests</h1>
+            <p class="text-muted mb-0">Track your SAO requests and support requests.</p>
+        </div>
+        @if (User.IsInRole("Student"))
+        {
+            <a class="btn btn-primary" asp-action="Create">New Request</a>
+        }
+    </div>
+
+    <div class="table-card">
+        <table class="table mb-0">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var request in Model)
+                {
+                    <tr>
+                        <td>@request.Subject</td>
+                        <td>@request.Category</td>
+                        <td><span class="badge badge-status @(("badge-" + request.Status.ToString().ToLowerInvariant().Replace(" ", "-").Replace("_", "-")) )">@request.Status</span></td>
+                        <td>@request.DateSubmitted.ToString("MMM dd, yyyy")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

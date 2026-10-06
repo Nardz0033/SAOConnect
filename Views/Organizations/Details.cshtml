@@ -1,0 +1,28 @@
+@model NardzSAO.Models.Organization
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container-lg py-4">
+    <div class="panel-card p-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+            <h1>@Model.Name</h1>
+            <span class="badge text-bg-light">@Model.Category</span>
+        </div>
+        <p>@Model.Description</p>
+        <div class="row g-3">
+            <div class="col-md-6"><strong>President:</strong> @Model.President</div>
+            <div class="col-md-6"><strong>Adviser:</strong> @Model.Adviser</div>
+            <div class="col-12"><strong>Contact:</strong> @Model.ContactInformation</div>
+        </div>
+
+        @if (User.IsInRole("Student"))
+        {
+            <form asp-action="Join" method="post" class="mt-4">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@Model.Id" />
+                <button type="submit" class="btn btn-primary">Request Membership</button>
+            </form>
+        }
+    </div>
+</div>
